@@ -1,5 +1,16 @@
-<?php 
-include ("models/persona.model.php");
+<?php
+/**
+ * bienvenida.php
+ * La vista de bienvenida no tiene interaccion y simplemente es para darle la bienvenida al estudiante
+ * o al maestro, dependiendo del tipo de usuario, te informa de que es lo que hace la pagina y te pide 1 
+ * inicies la evaluacion si eres alumno o en que mires tus resultados en el caso del maestro.
+ */
+
+
+if(!isset($nivel_dir)){
+$nivel_dir="../";	
+}
+include ($nivel_dir."models/persona.model.php");
 
 
 ?>

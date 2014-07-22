@@ -25,7 +25,17 @@ class MySQLDB
         //echo $query;
         $result = $this->connection->query($query);
         //    $dbarray = mysql_fetch_array($result);
+
+        if ($mysqli->error) {
+    try {    
+        throw new Exception("MySQL error $mysqli->error <br> Query:<br> $query", $msqli->errno);    
+    } catch(Exception $e ) {
+        echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+        echo nl2br($e->getTraceAsString());
+    }
+}else{
         return $result;
+    }
     }
     //funcion para seleccionar toda la informacion de una tabla, regresa un array con toda la informacion
     function selectAll($table) {
@@ -49,9 +59,13 @@ class MySQLDB
     //Funcion para convertir el resultado de un query a un array.
     function toArray($data) {
         global $database;
+        if(!$data==FALSE){
         while ($rows[] = $data->fetch_assoc());
         array_pop($rows);
         return $rows;
+
+    }else{echo "ERROR not valid DATA!";}
+
     }
     //Esta funcion borra un campo especificandole la tabla el nombre del campo y  el identificador.
     function deleteField($table, $field_name, $id) {
@@ -69,6 +83,25 @@ class MySQLDB
         $q = "INSERT INTO `" . $table . "` VALUES" . $values . ";";
         // echo $q;
         return $this->connection->query($q);
+    }
+    function exist($query){
+        $result=$this->query($query);
+        $nrows=$result->num_rows;
+        if(!$result || $nrows < 1){
+        return FALSE;
+        }else if ($nrows>=1){
+        return TRUE;
+        }
+    
+    }
+    function count($query){
+    return $query->num_rows;
+    }
+
+    function selectSingleField($table,$field,$where,$value){
+    $query='SELECT '.$field.' FROM '.$table.' WHERE '.$where.'='.$value;
+    return array_values(mysqli_fetch_array($this->query($query)))[0];
+
     }
 };
 /* Crear conexion a base de datos */

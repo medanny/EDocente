@@ -1,8 +1,10 @@
 <?php
+if(!isset($nivel_dir)){
+$nivel_dir="../";	
+}
 $isindex=1;
-include ("models/persona.model.php");
-include_once ("tutzi/class/template.class.php");
-include_once ("tutzi/template/builder/form.template.php");
+include_once ($nivel_dir."tutzi/class/template.class.php");
+include_once ($nivel_dir."tutzi/template/builder/form.template.php");
 
 global $template;
 global $form;

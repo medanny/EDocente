@@ -2,9 +2,11 @@
 // encuesta.model.php
 // Esta clase es la primera que se encarga de recoger las variables
 // de session y tomar las diferentes permisos.
-
-include_once("tutzi/class/session.class.php");
-include_once("tutzi/class/tools.class.php");
+if(!isset($nivel_dir)){
+$nivel_dir="../";	
+}
+include_once($nivel_dir."tutzi/class/session.class.php");
+include_once($nivel_dir."tutzi/class/tools.class.php");
 
 
 class Encuesta
@@ -12,6 +14,9 @@ class Encuesta
 
 var $nombre;     //Usuario
 var $materias;       //Contrasena
+var $id_estudiante;
+var $escuela;
+
 
 function Encuesta(){
 global $session;
@@ -23,6 +28,8 @@ $content=$database->query($q);
 $estudiante = $content->fetch_assoc();
 $this->nombre= $estudiante['Nombre']." ".$estudiante['A_Paterno']." ". $estudiante['A_Materno'];
 $this->materias=$content->num_rows;
+$this->id_estudiante=$_SESSION['username'];
+$this->escuela=$estudiante['id_Escuela'];
 
 }
 
@@ -41,6 +48,23 @@ return 1;
 else{
 return 2;
 }
+
+}
+function getMaterias(){
+global $database;
+$estu_matri=$_SESSION['username'];	
+$q="SELECT * FROM `Carga`,`Detalle_Clase`,`Estudiante` WHERE `Estudiante_idEstudiante` = $estu_matri AND `Detalle_Clase`.`idMateria_Detalle` = `Carga`.`Detalle_Clase_idMateria_Detalle` AND `Carga`.`Estudiante_idEstudiante`=`Estudiante`.`idEstudiante`";
+$content=$database->query($q);
+return $database->toArray($content);
+
+}
+
+function getMatCat($categoria){
+global $database;
+$estu_matri=$_SESSION['username'];	
+$q="SELECT * FROM `Pregunta` WHERE `Encuestas_idEncuestas` = 1 AND `id_Categoria` ='".$categoria."' ORDER BY `Pregunta`.`idPregunta` ASC";
+$content=$database->query($q);
+return $database->toArray($content);
 
 }
 

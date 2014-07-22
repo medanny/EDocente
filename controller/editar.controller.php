@@ -1,15 +1,38 @@
 <?php 
 //Models go here
-include ("models/editar.model.php");
-global $editar;
+if(!isset($nivel_dir)){
+$nivel_dir="../";  
+}
+include ($nivel_dir."models/editar.model.php");
 
 class Editar_Controller{//Clase
 
-	function Model(){//Constructor
 
+
+	function Editar_Controller(){//Constructor
+if(isset($_POST['tipo'])){
+      switch ($_POST['tipo']) {
+        case "maestro":
+          # code...
+        $this->updatemaestro();
+          break;
+        
+        default:
+          # code...
+          break;
+      }
+    }
 
 	}
-	function cargarPagina($name){
+
+
+function updatemaestro(){
+global $editar;
+$editar->updatemaestro($_POST['campo'],$_POST['value'],$_POST['id']);
+
+}
+function cargarPagina($pagina){
+global $editar;
 
         switch ($pagina) {
             case "maestro":
@@ -28,12 +51,19 @@ class Editar_Controller{//Clase
                 return "NOT FOUND";
                 break;
         }
-        $editar->maestro();
         //echo "TIMEOUT!";
       }
 
 
-	}
+
+  function cargarAccion($accion,$id){
+    global $editar;
+  if($accion="MaestroEscuela"){
+    return $editar->maestroEscuela($id);
+
+  }
+
+  }
 
 }
 
