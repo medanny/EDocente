@@ -58,11 +58,11 @@ global $editar;
 
   function cargarAccion($accion,$id){
     global $editar;
-  if($accion="MaestroEscuela"){
+  if($accion=="MaestroEscuela"){
     return $editar->maestroEscuela($id);
-
+  }else if($accion=="MaestroEstatus"){
+    return $editar->maestroEstatus($id);
   }
-
   }
 
 }

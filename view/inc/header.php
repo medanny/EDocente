@@ -27,8 +27,10 @@
                                 <li class="user-header bg-light-blue">
                                     <img src="/view/inc/img/fotos/<?php echo $_SESSION['username'];?>.jpg" class="img-circle" alt="User Image" />
                                     <p>
-                                        Daniel Lozano Carrillo
-                                        <small>Ingenieria en Sistemas Computacionales</small>
+                                        <?php echo $persona->getName();?>
+                                        <small><? if($persona->esEstudiante()==1){echo "ESTUDIANTE";}
+                                                else if($persona->esMaestro()==2){echo "MAESTRO";}?>
+                                        </small>
                                     </p>
                                 </li>
                                 <!-- Menu Body -->

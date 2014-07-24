@@ -17,10 +17,15 @@ var $estudiante;       //Contrasena
 var $maestro;
 var $dirFacultad;
 var $dirEscuela;
+var $nombre;     //Usuario
+var $materias;       //Contrasena
+var $id_estudiante;
+var $escuela;
 
 function Persona(){
 global $session;
 global $tools;
+global $database;
 $check=$session->checkLogin();
 if(!$check&&empty($isindex))
 {
@@ -40,10 +45,19 @@ $tools->safe_redirect("index.php?page=bienvenida");
 
 }
 
-
-
-
 }
+
+function getName(){
+global $session;
+global $tools;
+global $database;
+$estu_matri=$_SESSION['username'];
+$q="SELECT * FROM `Carga`,`Detalle_Clase`,`Estudiante` WHERE `Estudiante_idEstudiante` = $estu_matri AND `Detalle_Clase`.`idMateria_Detalle` = `Carga`.`Detalle_Clase_idMateria_Detalle` AND `Carga`.`Estudiante_idEstudiante`=`Estudiante`.`idEstudiante`";
+$content=$database->query($q);
+$estudiante = $content->fetch_assoc();
+$this->nombre= $estudiante['Nombre']." ".$estudiante['A_Paterno']." ". $estudiante['A_Materno'];
+return $this->nombre;
+} 
 
 function getPermisos(){
  $this->estudiante=$this->esEstudiante();
@@ -54,10 +68,10 @@ function getPermisos(){
 }
 
 function permiso($grupo){
-if($this->grupo==$grupo||$grupo=7){
-return 1;
+if($this->grupo==$grupo||$this->grupo==7){
+return TRUE;
 }
-else {return 2;}
+else {return FALSE;}
 
 }
 
@@ -85,7 +99,7 @@ return 1;
 function esMaestro(){
 global $database;
 $usuario=$_SESSION['username'];
-$query="SELECT * FROM `Maestro` WHERE `idMaestro` = = $usuario";
+$query="SELECT * FROM `Maestro` WHERE `idMaestro` = $usuario";
 if($database->exist($query)){
 return 1;	
 }else {return 0;}
@@ -102,17 +116,17 @@ return $database->selectSingleField("Usuario","grupo","idUsuario",$usuario);
 //return $result['grupo'];
 }
 
-function dirFacultad(){
+function dirEscuela(){
 global $database;
 $usuario=$_SESSION['username'];
 $query="SELECT * FROM `Escuelas` WHERE `id_Director` = $usuario";
 if($database->exist($query)){
-return $database->selectSingleField("Escuelas","id_Escuelas","id_Director",$usuario);	
+return $database->selectSingleField("Escuelas","idEscuelas","id_Director",$usuario);	
 }
 else {return NULL;}
 }
 
-function dirEscuela(){
+function dirFacultad(){
 global $database;
 $usuario=$_SESSION['username'];
 $query="SELECT * FROM `Facultades` WHERE `id_Director` = $usuario";

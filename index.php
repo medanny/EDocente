@@ -7,12 +7,14 @@
  */
 
 $nivel_dir=""; //Identificador de directorio.
+
 include ($nivel_dir."tutzi/class/template.class.php");//include de en constructor de template tutzi
 
 
 
 if(isset($_GET["page"])){//Si la variable page existe
-
+include_once($nivel_dir."models/persona.model.php");
+global $persona;
 include_once ($nivel_dir."tutzi/class/session.class.php");//Incluir Sessiones de Tutzi
 include ($nivel_dir."view/inc/head.php");//template
 include ($nivel_dir."view/inc/header.php");//template

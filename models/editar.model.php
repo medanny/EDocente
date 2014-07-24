@@ -4,7 +4,7 @@ if(!isset($nivel_dir)){
 $nivel_dir="../";    
 }
 include_once($nivel_dir."models/persona.model.php");
-class Editar{//Clase
+class Editar{//Clase 
 
     var $html;
 
@@ -58,16 +58,16 @@ class Editar{//Clase
        $html=$html. "<tr>";
        $html=$html."<td>".$maestro['idMaestro']."</td>";
        $html=$html."<td>".$maestro['Nombre']." ".$maestro['A_Paterno']." ".$maestro['A_Materno']."</td>";
-       $html=$html. '<td><span class="label label-success">';
-       if($maestro['estatus']=0){
-        $html=$html."Activo";
-       }else if($maestro['estatus']=1){
-        $html=$html."Inactivo";
+       $html=$html. '<td><a href="index.php?page=editar&tipo=maestro&accion=MaestroEstatus&id='.$maestro['idMaestro'].'" >';
+       if($maestro['estatus']==0){
+        $html=$html.'<span class="label label-danger">Inactivo';
+       }else if($maestro['estatus']==1){
+        $html=$html.'<span class="label label-success">Activo';
        }
-        $html=$html.'</span></td>';
+        $html=$html.'</span></a></td>';
        $html=$html. '<td><span class="label label-success">'.$maestro['nombre'].'</span></td>';
        $html=$html.'<td><a href="index.php?page=editar&tipo=maestro&accion=MaestroEscuela&id='.$maestro['idMaestro'].'" ><span class="label label-success">'.$maestro['descripcion'].'</span></td></a>';
-       $html=$html. "</tr>";
+       $html=$html. "</tr>"; 
 
     }
 
@@ -119,8 +119,11 @@ class Editar{//Clase
                                     <div class="box-body">
                                         
                                         <input type="hidden" name="id" value="'.$id.'">
-                                        <input type="hidden" name="tipo" value="maestro">
+                                        <input type="hidden" name="tipo" value="update">
                                         <input type="hidden" name="campo" value="id_escuela">
+                                        <input type="hidden" name="tabla" value="Maestro">
+                                        <input type="hidden" name="where" value="idMaestro">
+                                        <input type="hidden" name="url" value="../index.php?page=editar&tipo=maestro">
                                         
                                         <div class="form-group">
                                             <label>Nombre</label>
@@ -157,6 +160,68 @@ class Editar{//Clase
     $this->html="";
 
     }
+
+    function maestroEstatus($id){
+    global $database;
+    $data=$this->getEscuelas();
+    $maestro=$database->query("SELECT * FROM `Maestro` WHERE `idMaestro` = $id");
+    $maestro=$database->toArray($maestro);
+    $nombre="";
+    $idEscuela="";
+    foreach ($maestro as $key) {
+    $nombre=$key['Nombre'];
+    $idEscuela=$key['id_escuela'];
+    }
+    $this->htmladd('<div class="box box-primary">
+                                <div class="box-header">
+                                    <h3 class="box-title">Editar Maestro</h3>
+                                </div><!-- /.box-header -->
+                                <!-- form start -->
+                                <form action="controller/main.controller.php" method="get">
+                                    <div class="box-body">
+                                        
+                                        <input type="hidden" name="id" value="'.$id.'">
+                                        <input type="hidden" name="tipo" value="update">
+                                        <input type="hidden" name="campo" value="estatus">
+                                        <input type="hidden" name="tabla" value="Usuario">
+                                        <input type="hidden" name="where" value="idUsuario">
+                                        <input type="hidden" name="url" value="../index.php?page=editar&tipo=maestro">
+                                        
+                                        <div class="form-group">
+                                            <label>Nombre</label>
+                                            <input type="text" class="form-control" placeholder="'.$nombre.'" disabled="">
+                                        </div>
+
+
+
+                                        <div class="form-group">
+                                            <label>Estatus</label>
+                                            <select class="form-control" name="value">
+                                            <option value="0">NO ACTIVO</option>
+                                            <option value="1">ACTIVO</option>
+                                            ');
+    
+    $this->htmladd(' </select>
+                                        </div>
+
+                                    </div><!-- /.box-body -->
+
+                                    <div class="box-footer">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </form>
+                            </div>');
+    return $this->html;
+    $this->html="";
+
+    }
+
+
+
+
+
+
+
     function getEscuelas(){
     global $database;
     $data=$database->query("SELECT * FROM `Escuelas`");
@@ -172,6 +237,15 @@ class Editar{//Clase
         $query="UPDATE `Maestro` SET `$campo` = '$valor' WHERE `idMaestro` = $id";
         echo $query;
         $database->query("UPDATE `Maestro` SET `$campo` = '$valor' WHERE `idMaestro` = $id");
+    }
+    function update($tabla,$campo,$valor,$where,$id){
+    	global $database;
+        $query="UPDATE `$tabla` SET `$campo` = '$valor' WHERE `$where` = $id";
+        //echo $query;
+    //    echo $query;
+        $database->query($query);
+
+
     }
 
 

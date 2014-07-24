@@ -10,11 +10,12 @@
 if(!isset($nivel_dir)){
 $nivel_dir="../";	
 }
-include ($nivel_dir."models/persona.model.php");
 
 
 ?>
 <div style="text-align:center;"> 
+<?php if($persona->esEstudiante()==1){?>
+
                             
 
 <h2>Bienvenido al proceso de evaluaci&oacute;n de tus docentes<h2>
@@ -50,10 +51,32 @@ include ($nivel_dir."models/persona.model.php");
 									</p>
 									<small>Mateo 25:15</small>
 								</blockquote>
- 								<a href="main.php?encuesta" class="btn btn-lg red">
-											Iniciar Encuesta <i class="fa fa-edit"></i>
-											</a>
+ 								
 
 
 
-                            </div><!-- /.box -->      
+                                
+<?php } if($persona->esMaestro()==1){?>
+
+<h2>Bienvenido al Sistema de evaluacion Docente<h2>
+
+										<!--h2>Universidad de Navojoa<br-->
+										<img src="view/inc/img/Logo2.png" />
+										<h3>
+										Vicerrector&iacute;a acad&eacute;mica<br>
+										Direcci&oacute;n de calidad educativa<br>
+										</h3>
+										<p class="lead">
+											 Aqui podras ver los resultados de tu evaluacion docente. 
+										</p>
+										
+										
+							
+								<blockquote>
+									<p>
+										 A uno dio 5 talentos, y a otro 2, y a otro 1, a cada uno dio conforme a su capacidad; y luego se fue lejos
+									</p>
+									<small>Mateo 25:15</small>
+								</blockquote>
+<?php }?>
+</div><!-- /.box -->  

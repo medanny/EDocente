@@ -1,5 +1,4 @@
-<?php 
-include ("models/persona.model.php");
+<?php
 include ("view/inc/head.php");
 include ("view/inc/header.php");
 include ("view/inc/content.php");

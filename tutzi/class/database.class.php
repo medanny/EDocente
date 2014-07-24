@@ -101,6 +101,9 @@ class MySQLDB
     function selectSingleField($table,$field,$where,$value){
     $query='SELECT '.$field.' FROM '.$table.' WHERE '.$where.'='.$value;
     return array_values(mysqli_fetch_array($this->query($query)))[0];
+    }
+    function singleField($query){
+    return array_values(mysqli_fetch_array($this->query($query)))[0];
 
     }
 };

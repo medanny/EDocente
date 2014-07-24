@@ -14,28 +14,21 @@ class MainController
 {
    /* Constructor de clase */
    function MainController(){
-    echo $_GET['tipo'];  
-      if(isset($_GET['tipo'])){
-      switch ($_GET['tipo']) {
-        case "maestro":
-        $this->updatemaestro();
-          break;
-        
-        default:
-          # code...
-          break;
-      }
-    }
+   if($_GET['tipo']=="update"){
+   	$this->update();
+   	 } 
+   
       
       }
 
-function updatemaestro(){
+function update(){
 global $editar;
 global $tools;
-//echo " ".$_GET['tipo']." ".$_GET['campo']." ".$_GET['value']." ".$_GET['id'];
-$editar->updatemaestro($_GET['campo'],$_GET['value'],$_GET['id']);
-$tools->safe_redirect("../index.php?page=editar&tipo=maestro");
+$editar->update($_GET['tabla'],$_GET['campo'],$_GET['value'],$_GET['where'],$_GET['id']);
+$tools->safe_redirect($_GET['url']);
 }
+
+
       
 
    

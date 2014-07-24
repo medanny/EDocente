@@ -1,5 +1,5 @@
 <?php
-/**
+/** 
  * Editar.php
  * Esta vista es para editar los diferentes, catalogos, recibe variables GET del url y las manda al controlador.
  * primero busca acciones y luego tipo.
@@ -9,7 +9,7 @@ if(!isset($nivel_dir)){
 $nivel_dir="../";	
 }
 //incluir controlador.
-include ($nivel_dir."controller/editar.controller.php");
+include_once($nivel_dir."controller/editar.controller.php");
 //variable global del controlador
 global $editar_controller;
 //Content goes here....

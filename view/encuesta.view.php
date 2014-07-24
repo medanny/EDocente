@@ -21,9 +21,10 @@ echo $template->mostrarAdvertencia("exito", $string1);
 
 ?>
 
-<form method="post" action="insert.php">
+<form method="post" action="models/encuesta.model.php">
 <input type="hidden" value="<?php echo $encuesta->id_estudiante;?> " name="matricula" />
 <input type="hidden" value="<?php echo $encuesta->escuela;?> " name="escuela" />
+<input type="hidden" value="encuesta" name="tipo" />
 <?php
 
 $rows= $encuesta->getCategorias();
