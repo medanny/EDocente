@@ -22,37 +22,48 @@ var $materias;       //Contrasena
 var $id_estudiante;
 var $escuela;
 
-function Persona(){
+function Persona($isindex=FALSE){
 global $session;
 global $tools;
 global $database;
-$check=$session->checkLogin();
-if(!$check&&empty($isindex))
-{
 
+$check=$session->checkLogin();
+if(!$check&&!$isindex)
+{
 
 $tools->safe_redirect("index.php?error=3");
 //header("location:index.php?error=3");
 
 }
 
-$this->getPermisos();
 
-if($check&&isset($isindex)){
+
+if($check&&$isindex){
 
 $tools->safe_redirect("index.php?page=bienvenida");	
 //header("location:main.php");
 
 }
 
+if(!$isindex){
+$this->getPermisos();
+
+}
 }
 
 function getName(){
 global $session;
 global $tools;
 global $database;
-$estu_matri=$_SESSION['username'];
-$q="SELECT * FROM `Carga`,`Detalle_Clase`,`Estudiante` WHERE `Estudiante_idEstudiante` = $estu_matri AND `Detalle_Clase`.`idMateria_Detalle` = `Carga`.`Detalle_Clase_idMateria_Detalle` AND `Carga`.`Estudiante_idEstudiante`=`Estudiante`.`idEstudiante`";
+$matricula=$_SESSION['username'];
+if($this->esEstudiante()==1){
+$q="SELECT * FROM `Carga`,`Detalle_Clase`,`Estudiante` WHERE `Estudiante_idEstudiante` = $matricula AND `Detalle_Clase`.`idMateria_Detalle` = `Carga`.`Detalle_Clase_idMateria_Detalle` AND `Carga`.`Estudiante_idEstudiante`=`Estudiante`.`idEstudiante`";
+
+}else
+if($this->esMaestro()==1){
+$q="SELECT * FROM `Maestro` WHERE `idMaestro` = $matricula";
+
+}
 $content=$database->query($q);
 $estudiante = $content->fetch_assoc();
 $this->nombre= $estudiante['Nombre']." ".$estudiante['A_Paterno']." ". $estudiante['A_Materno'];
@@ -96,6 +107,7 @@ return 1;
 }else {return 0;}
 
 }
+
 function esMaestro(){
 global $database;
 $usuario=$_SESSION['username'];
@@ -104,6 +116,16 @@ if($database->exist($query)){
 return 1;	
 }else {return 0;}
 }
+
+function isMaestro(){
+global $database;
+$usuario=$_SESSION['username'];
+$query="SELECT * FROM `Maestro` WHERE `idMaestro` = $usuario";
+if($database->exist($query)){
+return 1;	
+}else {return 0;}
+}
+
 
 function grupo(){
 global $database;
@@ -140,7 +162,14 @@ else {return NULL;}
 
 }
 
-$persona = new Persona();
 
+
+
+
+if(!$isindex){
+$persona = new Persona();
+}else{
+$persona = new Persona($isindex);
+}
 
 ?>

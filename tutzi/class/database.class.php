@@ -106,6 +106,32 @@ class MySQLDB
     return array_values(mysqli_fetch_array($this->query($query)))[0];
 
     }
+    function toMysqlDate($date){
+    return date('Y-m-d', strtotime($date));
+    }
+
+    
+    //$age=array("Nombre"=>"Daniel","A_Paterno"=>"Lozano","A_Materno"=>"Carrillo");
+    function insertxArray($array,$table){//!!NO PROVADO O TERMINADO!!!!
+    global $database;
+    $query="INSERT INTO $table";
+    //INSERT INTO tbl_name (col1,col2) VALUES(15,col1*2);
+
+    $fields="(";
+    $values="(";
+
+    foreach ($array as $key => $value) {
+
+    $fields=$fields.$key.",";
+    $values=$values.$value.",";
+
+    
+        # code...
+    }
+    //$database->query("");
+
+
+    }
 };
 /* Crear conexion a base de datos */
 $database = new MySQLDB;

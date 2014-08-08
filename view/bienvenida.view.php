@@ -12,13 +12,19 @@ $nivel_dir="../";
 }
 
 
+
+
+
 ?>
 <div style="text-align:center;"> 
+
 <?php if($persona->esEstudiante()==1){?>
 
                             
 
 <h2>Bienvenido al proceso de evaluaci&oacute;n de tus docentes<h2>
+
+
 
 										<!--h2>Universidad de Navojoa<br-->
 										<img src="view/inc/img/Logo2.png" />

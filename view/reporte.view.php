@@ -42,10 +42,15 @@ $count=0;
 $info=$reporte_controller->getPromedioMaestro($id);
 
 
+$html="";
 
 
 ?>
 
+
+<a class="btn btn-app" href="view/inc/reporteMaestroPDF.php?page=reporte&tipo=maestro&id='<?php echo $_GET['id'];?>'">
+                                        <i class="fa fa-edit"></i> Guardar como PDF
+                                    </a>
 <div class="box box-solid box-primary">
                                 <div class="box-header">
                                     <h3 class="box-title">Reporte de <?php echo $nombre;?>:</h3>
@@ -64,19 +69,29 @@ $info=$reporte_controller->getPromedioMaestro($id);
                                             <td style="widtd: 20px"><b>Universidad</b></td>
                                         </tr>
                                         <?php 
-                                        foreach ($info as $row) { $count++; ?>
+                                        foreach ($info as $row) { $count++; 
+                                             number_format($number, 2, '.', '');
+                                            $personal=number_format($row['promedio'],2, '.', '');
+                                            $t_esc=number_format($reporte_controller->getPromedioEscuela($row['Pregunta_idPregunta'],$escuela),2, '.', ''); 
+                                            $t_uni=number_format($reporte_controller->getPromedioUniversidad($row['Pregunta_idPregunta']),2, '.', ''); 
+                                            $maestro_promedio=$maestro_promedio+$row['promedio'];
+                                            $escuela_promedio=$escuela_promedio+$t_esc;
+                                            $uni_promedio=$uni_promedio+$t_uni;
+
+                                            ?>
                                         <tr>
                                             <td><?php echo $row['descripcion'];?></td>
-                                            <td><span class="label label-primary"><?php echo $row['promedio']; $maestro_promedio=$maestro_promedio+$row['promedio'];?></span></td>
-                                            <td><span class="label label-primary"><?php echo $t_esc=$reporte_controller->getPromedioEscuela($row['Pregunta_idPregunta'],$escuela); $escuela_promedio=$escuela_promedio+$t_esc;?></span></td>
-                                            <td><span class="label label-primary"><?php echo $t_uni=$reporte_controller->getPromedioUniversidad($row['Pregunta_idPregunta']); $uni_promedio=$uni_promedio+$t_uni;?></span></td>
+                                            <td><span class="label label-primary"><?php echo $personal;?></span></td>
+                                            <td><span class="label label-primary"><?php echo $t_esc;?></span></td>
+                                            <td><span class="label label-primary"><?php echo $t_uni;?></span></td>
                                         </tr>
                                         <?php }?>
                                         <tr>
                                         <td>TOTAL</td>
-                                        <td><span class="label label-primary"><? echo $maestro_promedio/$count;?></span></td>
-                                        <td><span class="label label-primary"><? echo $escuela_promedio/$count;?></span></td>
-                                        <td><span class="label label-primary"><? echo $uni_promedio/$count;?></span></td>
+
+                                        <td><span class="label label-primary"><? echo number_format($maestro_promedio/$count,2, '.', '');?></span></td>
+                                        <td><span class="label label-primary"><? echo number_format($escuela_promedio/$count,2, '.', '');?></span></td>
+                                        <td><span class="label label-primary"><? echo number_format($uni_promedio/$count,2, '.', '');?></span></td>
                                         <tr>
                                         
                                     </tbody></table>
@@ -86,3 +101,8 @@ $info=$reporte_controller->getPromedioMaestro($id);
                             </div>
 
   <?php }}?>
+
+
+
+
+

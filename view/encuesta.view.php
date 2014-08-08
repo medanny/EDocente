@@ -13,7 +13,17 @@ global $database;
 $disponible=$encuesta->disponible();
 if($disponible==1){
 
-echo "Gracias por contestar la encuesta.";
+//echo "Gracias por contestar la encuesta.";
+
+?>
+
+<div class="callout callout-info">
+                                        <h4>Gracias! por contestar la encuesta.</h4>
+                                        <p>Has formado parte del grupo de estudiantes que decidio participar para mejorar tu universidad.</p>
+                                    </div>
+
+
+<?php
 }
 else{
 $string1 = "Bienvenido ". $encuesta->nombre."<br>"."Usted tiene: ".$encuesta->materias." Materias.";

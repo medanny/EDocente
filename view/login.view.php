@@ -2,7 +2,8 @@
 if(!isset($nivel_dir)){
 $nivel_dir="../";	
 }
-$isindex=1;
+
+$isindex=TRUE;
 include_once ($nivel_dir."tutzi/class/template.class.php");
 include_once ($nivel_dir."tutzi/template/builder/form.template.php");
 

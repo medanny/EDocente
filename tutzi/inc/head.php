@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
 
-        <title><?php echo "TODO TITLE";?></title>
+        <title>WELCOME</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <!-- bootstrap 3.0.2 -->
         <link href="tutzi/template/css/bootstrap.min.css" rel="stylesheet" type="text/css" />

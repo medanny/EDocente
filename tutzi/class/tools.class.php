@@ -3,9 +3,12 @@
 
 class Tools
 {
+
 function Tools(){
 	
 }
+
+
 function safe_redirect($url){
 // Solo usar header redirec si no ah sido usado, para envitar error
 	//de headers ya redirecionadas.
@@ -41,9 +44,26 @@ header('HTTP/1.1 301 Moved Permanently');
     // salir
     exit;
 
-} 
+}
+
+function toPDF($html,$nivel_dir=NULL){
+include ($nivel_dir . "tutzi/inc/DOMPDF/dompdf_config.inc.php");
+//require_once ($nivel_dir. "inc/DOMPDF/dompdf_config.inc.php");
 
 
+
+$dompdf = new DOMPDF();
+$dompdf->load_html($html);
+$dompdf->render();
+$dompdf->stream("download.pdf");
+//$output = $dompdf->output();
+//return $output;
+
+
+
+
+
+}
 
 }
 

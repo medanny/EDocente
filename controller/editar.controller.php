@@ -62,7 +62,17 @@ global $editar;
     return $editar->maestroEscuela($id);
   }else if($accion=="MaestroEstatus"){
     return $editar->maestroEstatus($id);
+  }else if($accion=="MaestroGrupo"){
+    return $editar->maestroGrupo($id);
+  }else if($accion=="escuelaFacultad"){
+    return $editar->escuelaFacultad($id);
+  }else if($accion=="escuelaDirector"){
+    return $editar->escuelaDirector($id);
+  }else if($accion=="facultadDirector"){
+    return $editar->facultadDirector($id);
   }
+
+
   }
 
 }

@@ -29,7 +29,7 @@
                                     <p>
                                         <?php echo $persona->getName();?>
                                         <small><? if($persona->esEstudiante()==1){echo "ESTUDIANTE";}
-                                                else if($persona->esMaestro()==2){echo "MAESTRO";}?>
+                                                 if($persona->isMaestro()==1){echo "MAESTRO";}?>
                                         </small>
                                     </p>
                                 </li>
